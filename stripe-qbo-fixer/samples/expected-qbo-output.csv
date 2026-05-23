@@ -1,6 +1,0 @@
-Date,Description,Amount
-04/15/2026,Stripe: Payment from Client A,500.00
-04/15/2026,Stripe fee: Payment from Client A,-14.80
-04/16/2026,Stripe: Payment from Client B,1200.00
-04/16/2026,Stripe fee: Payment from Client B,-35.10
-04/18/2026,Stripe: Refund to Client A,-100.00

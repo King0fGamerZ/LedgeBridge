@@ -1,0 +1,4 @@
+id,Created (UTC),Description,Gross,Fee,Net,Currency,Customer Email
+txn_001,2026-04-15 14:22:00,Payment from Client A,500.00,14.80,485.20,usd,a@example.com
+txn_002,2026-04-16 09:10:00,Payment from Client B,1200.00,35.10,1164.90,usd,b@example.com
+txn_003,2026-04-18 16:45:00,Refund to Client A,-100.00,0.00,-100.00,usd,a@example.com

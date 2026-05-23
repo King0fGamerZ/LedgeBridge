@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LedgerBridge — Stripe CSV to QuickBooks</title>
+  <meta name="description" content="Convert Stripe export CSV to QuickBooks Online import format. Fee splits, date fixes, no upload to servers." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <span class="logo">LedgerBridge</span>
+      <span class="tag">Stripe → QuickBooks</span>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="hero">
+      <h1>Stripe CSV → QuickBooks import, fixed</h1>
+      <p class="lead">
+        Bookkeepers waste hours reformatting Stripe exports. LedgerBridge splits fees, normalizes dates, and outputs a QBO-ready CSV — <strong>in your browser</strong>, $0, no account required.
+      </p>
+    </section>
+
+    <section class="converter card">
+      <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="Upload Stripe CSV">
+        <input type="file" id="file-input" accept=".csv,text/csv" hidden />
+        <p class="drop-title">Drop your Stripe CSV here</p>
+        <p class="drop-hint">or click to browse · Balance transactions or Payments export</p>
+      </div>
+
+      <div class="options">
+        <label class="option">
+          <input type="checkbox" id="split-fees" checked />
+          Split Stripe fees into separate line items (recommended for QBO)
+        </label>
+        <label class="option">
+          <input type="checkbox" id="use-net" />
+          Use net amounts only (single line per transaction, no fee split)
+        </label>
+        <label class="option">
+          <span>Date format</span>
+          <select id="date-format">
+            <option value="mdy">MM/DD/YYYY (US QBO)</option>
+            <option value="ymd">YYYY-MM-DD</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="preview" class="preview" hidden>
+        <div class="preview-header">
+          <h2>Preview <span id="row-count"></span></h2>
+          <button type="button" id="download-btn" class="btn btn-primary">Download QBO CSV</button>
+        </div>
+        <div class="table-wrap">
+          <table id="preview-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p id="warnings" class="warnings"></p>
+      </div>
+
+      <p id="error" class="error" hidden></p>
+    </section>
+
+    <section class="steps">
+      <h2>Steps in QuickBooks</h2>
+      <ol>
+        <li>Stripe Dashboard → Balance → Export (CSV) or Reports → Payments</li>
+        <li>Convert here and download</li>
+        <li>QBO → Banking or Transactions → Import → Upload CSV</li>
+        <li>Map columns: Date, Description, Amount</li>
+      </ol>
+    </section>
+
+    <section class="waitlist card">
+      <h2>Need batch mode or saved mapping templates?</h2>
+      <p>Join the waitlist for Pro ($19/mo) — unlimited conversions + client presets.</p>
+      <form id="waitlist-form" class="waitlist-form">
+        <input type="email" name="email" placeholder="you@bookkeeping.com" required />
+        <button type="submit" class="btn btn-secondary">Join waitlist</button>
+      </form>
+      <p id="waitlist-msg" class="fine" hidden></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+  <p>Processed locally in your browser. Files never leave your device.</p>
+  </footer>
+
+  <script src="converter.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
