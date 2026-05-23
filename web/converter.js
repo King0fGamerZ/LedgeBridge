@@ -177,8 +177,16 @@ function convertStripeToQbo(csvText, options) {
   const out = [];
   const warnings = [];
   let skipped = 0;
+  let failedStatusCount = 0;
 
   for (const rec of records) {
+    // Skip transactions that are not successful
+    const status = pick(rec, ["status", "transactionstatus"]);
+    if (status && status.toLowerCase() !== "success") {
+      failedStatusCount++;
+      continue;
+    }
+
     const dateRaw = pick(rec, [
       "created",
       "createdutc",
@@ -254,6 +262,9 @@ function convertStripeToQbo(csvText, options) {
     throw new Error(
       "No rows converted. Use Stripe Balance transactions export (CSV) with Created, Amount, and Fee columns."
     );
+  }
+  if (failedStatusCount > 0) {
+    warnings.push(`${failedStatusCount} row(s) skipped (status not "success").`);
   }
   if (skipped > 0) {
     warnings.push(`${skipped} row(s) skipped (missing date or zero amount).`);

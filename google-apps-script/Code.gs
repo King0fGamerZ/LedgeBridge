@@ -63,6 +63,12 @@ function convertRows_(data) {
 }
 
 function mapRecord_(rec) {
+  // Skip transactions that are not successful
+  var status = pick_(rec, ['status', 'transactionstatus']);
+  if (status && String(status).toLowerCase() !== 'success') {
+    return null;
+  }
+
   var dateRaw = pick_(rec, ['created', 'createdutc', 'date', 'availableon']);
   var desc = pick_(rec, ['description', 'reportingcategory', 'type']) || 'Stripe transaction';
   var gross = parseAmount_(pick_(rec, ['gross', 'amount', 'total']));
